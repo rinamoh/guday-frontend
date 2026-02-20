@@ -1,0 +1,1977 @@
+{
+  "info": {
+    "_postman_id": "38c8019d-fe19-44fb-b7d4-ff6fad2f8031",
+    "name": "Gudaye API Collection",
+    "description": "Complete API collection for Ethiopian Government Services Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30005541",
+    "_collection_link": "https://go.postman.co/collection/30005541-38c8019d-fe19-44fb-b7d4-ff6fad2f8031?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login (User/Agent)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "admin",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "password123",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Public - Categories",
+      "item": [
+        {
+          "name": "List All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Category by Slug",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories/immigration",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "immigration"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Public - Services",
+      "item": [
+        {
+          "name": "List Services (with filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/services?page=1&page_size=20&category_id=550e8400-e29b-41d4-a716-446655440000&target_audience=individuals&is_online_available=true&search=passport",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "services"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (default: 1)"
+                },
+                {
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Items per page (default: 20, max: 100)"
+                },
+                {
+                  "key": "category_id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000",
+                  "description": "Filter by category UUID"
+                },
+                {
+                  "key": "target_audience",
+                  "value": "individuals",
+                  "description": "Filter by audience: individuals, businesses, both"
+                },
+                {
+                  "key": "is_online_available",
+                  "value": "true",
+                  "description": "Filter by online availability"
+                },
+                {
+                  "key": "search",
+                  "value": "passport",
+                  "description": "Search in title and overview"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Service by Slug",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/services/get-new-passport",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "services",
+                "get-new-passport"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Service Steps",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/services/get-new-passport/steps",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "services",
+                "get-new-passport",
+                "steps"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Service Documents",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/services/get-new-passport/documents",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "services",
+                "get-new-passport",
+                "documents"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Service FAQs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/services/get-new-passport/faqs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "services",
+                "get-new-passport",
+                "faqs"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Public - Search",
+      "item": [
+        {
+          "name": "Search Services",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/search?q=passport&category_id=550e8400-e29b-41d4-a716-446655440000&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "passport",
+                  "description": "Search query (required)"
+                },
+                {
+                  "key": "category_id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000",
+                  "description": "Filter by category UUID"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Max results (default: 10)"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin - Auth",
+      "item": [
+        {
+          "name": "Admin Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.access_token) {",
+                  "    pm.collectionVariables.set('admin_token', jsonData.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "admin",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh_token\": \"your-refresh-token-here\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/auth/refresh",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "auth",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/auth/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"current_password\": \"oldpassword\",\n    \"new_password\": \"newpassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/auth/change-password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "auth",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Admin User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"newadmin\",\n    \"email\": \"newadmin@example.com\",\n    \"password\": \"securepassword123\",\n    \"full_name\": \"New Admin User\",\n    \"is_superuser\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/auth/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "auth",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin - Agents",
+      "item": [
+        {
+          "name": "List Agents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/agents?category_id=550e8400-e29b-41d4-a716-446655440000&is_active=true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "agents"
+              ],
+              "query": [
+                {
+                  "key": "category_id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000",
+                  "description": "Filter by category UUID"
+                },
+                {
+                  "key": "is_active",
+                  "value": "true",
+                  "description": "Filter by active status"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Agent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"agent1\",\n    \"email\": \"agent1@example.com\",\n    \"password\": \"agentpassword123\",\n    \"category_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/agents",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "agents"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Agent",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/agents/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "agents",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Agent",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"agent1_updated\",\n    \"email\": \"agent1_new@example.com\",\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/agents/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "agents",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Category to Agent",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"category_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/agents/1/category",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "agents",
+                "1",
+                "category"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Category from Agent",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/agents/1/category",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "agents",
+                "1",
+                "category"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Agent OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/agents/1/otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "agents",
+                "1",
+                "otp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Agent",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/agents/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "agents",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin - Categories",
+      "item": [
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Immigration\",\n    \"slug\": \"immigration\",\n    \"description\": \"Immigration and passport services\",\n    \"parent_id\": null,\n    \"icon_url\": \"https://example.com/icons/immigration.svg\",\n    \"display_order\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/categories/550e8400-e29b-41d4-a716-446655440000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "categories",
+                "550e8400-e29b-41d4-a716-446655440000"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Immigration Services\",\n    \"slug\": \"immigration-services\",\n    \"description\": \"All immigration and passport related services\",\n    \"parent_id\": null,\n    \"icon_url\": \"https://example.com/icons/immigration-new.svg\",\n    \"display_order\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/categories/550e8400-e29b-41d4-a716-446655440000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "categories",
+                "550e8400-e29b-41d4-a716-446655440000"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/categories/550e8400-e29b-41d4-a716-446655440000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "categories",
+                "550e8400-e29b-41d4-a716-446655440000"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin - Services",
+      "item": [
+        {
+          "name": "List Services",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/services?page=1&page_size=20&status=published&category_id=550e8400-e29b-41d4-a716-446655440000&search=passport",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Items per page"
+                },
+                {
+                  "key": "status",
+                  "value": "published",
+                  "description": "Filter by status: draft, published, archived"
+                },
+                {
+                  "key": "category_id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000",
+                  "description": "Filter by category UUID"
+                },
+                {
+                  "key": "search",
+                  "value": "passport",
+                  "description": "Search in title"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Service",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"procedure_id\": \"PROC-001\",\n    \"slug\": \"get-new-passport\",\n    \"title\": \"Get New Passport\",\n    \"overview\": \"Complete guide to obtaining a new Ethiopian passport\",\n    \"short_description\": \"Apply for a new passport\",\n    \"language\": \"en\",\n    \"category_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"sub_category_id\": null,\n    \"target_audience\": \"individuals\",\n    \"estimated_duration\": \"2-3 weeks\",\n    \"processing_time\": \"5-10 business days\",\n    \"is_online_available\": true,\n    \"requires_appointment\": true,\n    \"fees\": \"500 ETB\",\n    \"keywords\": [\"passport\", \"travel\", \"identification\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/services",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Service",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/services/550e8400-e29b-41d4-a716-446655440000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "550e8400-e29b-41d4-a716-446655440000"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Service",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Get New Ethiopian Passport\",\n    \"overview\": \"Updated guide to obtaining a new Ethiopian passport\",\n    \"short_description\": \"Apply for a new Ethiopian passport\",\n    \"target_audience\": \"both\",\n    \"estimated_duration\": \"1-2 weeks\",\n    \"processing_time\": \"3-5 business days\",\n    \"is_online_available\": true,\n    \"requires_appointment\": false,\n    \"fees\": \"600 ETB\",\n    \"keywords\": [\"passport\", \"travel\", \"identification\", \"ethiopia\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/services/550e8400-e29b-41d4-a716-446655440000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "550e8400-e29b-41d4-a716-446655440000"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Service",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/services/550e8400-e29b-41d4-a716-446655440000/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "550e8400-e29b-41d4-a716-446655440000",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Archive Service",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/services/550e8400-e29b-41d4-a716-446655440000/archive",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "550e8400-e29b-41d4-a716-446655440000",
+                "archive"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Service",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/services/550e8400-e29b-41d4-a716-446655440000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "550e8400-e29b-41d4-a716-446655440000"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Service Step",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"step_number\": 1,\n    \"step_type\": \"action\",\n    \"title\": \"Gather Required Documents\",\n    \"instruction\": \"Collect all required documents including ID card, photos, and birth certificate\",\n    \"estimated_duration\": \"1 day\",\n    \"is_online_available\": false,\n    \"requires_physical_presence\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/services/550e8400-e29b-41d4-a716-446655440000/steps",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "550e8400-e29b-41d4-a716-446655440000",
+                "steps"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Service Step",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"step_number\": 1,\n    \"step_type\": \"document_submission\",\n    \"title\": \"Submit Required Documents\",\n    \"instruction\": \"Submit all gathered documents at the immigration office\",\n    \"estimated_duration\": \"2 hours\",\n    \"is_online_available\": true,\n    \"requires_physical_presence\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/services/550e8400-e29b-41d4-a716-446655440000/steps/660e8400-e29b-41d4-a716-446655440001",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "550e8400-e29b-41d4-a716-446655440000",
+                "steps",
+                "660e8400-e29b-41d4-a716-446655440001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Service Step",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/services/550e8400-e29b-41d4-a716-446655440000/steps/660e8400-e29b-41d4-a716-446655440001",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "550e8400-e29b-41d4-a716-446655440000",
+                "steps",
+                "660e8400-e29b-41d4-a716-446655440001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bulk Import Services",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"items\": [\n        {\n            \"procedure_id\": \"PROC-002\",\n            \"slug\": \"renew-passport\",\n            \"title\": \"Renew Passport\",\n            \"overview\": \"How to renew your Ethiopian passport\",\n            \"category\": \"Immigration\",\n            \"sub_category\": \"Passport Services\",\n            \"target_audience\": \"individuals\",\n            \"language\": \"en\",\n            \"eligibility\": [\"Ethiopian citizen\", \"Passport expiring within 6 months\"],\n            \"required_documents\": [\"Current passport\", \"ID photos\"],\n            \"step_by_step_process\": [\n                {\"step_number\": 1, \"instruction\": \"Fill online form\"},\n                {\"step_number\": 2, \"instruction\": \"Pay fees\"}\n            ],\n            \"locations_or_channels\": [\"Main Immigration Office\"],\n            \"estimated_duration\": \"1 week\",\n            \"fees\": \"400 ETB\",\n            \"processing_time\": \"3-5 days\",\n            \"notes_and_exceptions\": [\"Express processing available\"],\n            \"source_references\": [\"Immigration Proclamation 2020\"],\n            \"is_online_available\": true,\n            \"requires_appointment\": true\n        }\n    ],\n    \"publish\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/services/bulk-import",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "services",
+                "bulk-import"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin - Index",
+      "item": [
+        {
+          "name": "Get Index Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/index/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "index",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Trigger Re-indexing",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"full_reindex\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/index/trigger",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "index",
+                "trigger"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Clear Index",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/index/clear",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "index",
+                "clear"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bot - User",
+      "item": [
+        {
+          "name": "Get Bot User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bot/user/123456789",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "bot",
+                "user",
+                "123456789"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Bot User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"telegram_id\": \"123456789\",\n    \"username\": \"testuser\",\n    \"first_name\": \"Test\",\n    \"last_name\": \"User\",\n    \"full_name\": \"Test User\",\n    \"phone\": \"+251911234567\",\n    \"language_code\": \"en\",\n    \"registration_step\": 0,\n    \"onboarding_completed\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/bot/user/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "bot",
+                "user",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Bot User Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"full_name\": \"Updated Name\",\n    \"phone\": \"+251922345678\",\n    \"registration_step\": 3,\n    \"onboarding_completed\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/bot/user/123456789/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "bot",
+                "user",
+                "123456789",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Agent OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"telegram_id\": \"987654321\",\n    \"otp_code\": \"12345678\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/bot/user/agent/verify",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "bot",
+                "user",
+                "agent",
+                "verify"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Agent by Telegram ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bot/user/agent/987654321",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "bot",
+                "user",
+                "agent",
+                "987654321"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"telegram_id\": \"123456789\",\n    \"category_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/bot/user/tickets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "bot",
+                "user",
+                "tickets"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tickets",
+      "item": [
+        {
+          "name": "List Unclaimed Tickets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tickets/unclaimed",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "unclaimed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Claim Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              },
+              {
+                "key": "X-Agent-Telegram-Id",
+                "value": "987654321"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tickets/1/claim",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "1",
+                "claim"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Close Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              },
+              {
+                "key": "X-Telegram-Id",
+                "value": "123456789"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tickets/1/close",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "1",
+                "close"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Send Message to Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"sender_type\": \"user\",\n    \"message_text\": \"Hello, I need help with my passport application.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tickets/1/messages",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "1",
+                "messages"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Active Ticket",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Bot-Token",
+                "value": "{{bot_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tickets/active/123456789?is_agent=false",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "active",
+                "123456789"
+              ],
+              "query": [
+                {
+                  "key": "is_agent",
+                  "value": "false",
+                  "description": "true for agent, false for user"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users (RBAC)",
+      "item": [
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"newuser\",\n    \"email\": \"newuser@example.com\",\n    \"password\": \"password123\",\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Roles to User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"role_ids\": [1, 2]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/1/roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "1",
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Category to User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"category_id\": \"550e8400-e29b-41d4-a716-446655440000\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/1/category",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "1",
+                "category"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Users by Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/category/550e8400-e29b-41d4-a716-446655440000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "category",
+                "550e8400-e29b-41d4-a716-446655440000"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generate User OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/1/otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "1",
+                "otp"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Security (RBAC)",
+      "item": [
+        {
+          "name": "List Permissions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/security/permissions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "permissions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Roles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/security/roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Role",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/security/roles/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "roles",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Support Agent\",\n    \"description\": \"Can handle support tickets\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/security/roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Senior Support Agent\",\n    \"description\": \"Can handle escalated support tickets\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/security/roles/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "roles",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Role",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/security/roles/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "roles",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Permissions to Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"permission_ids\": [1, 2, 3, 4]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/security/roles/1/permissions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "security",
+                "roles",
+                "1",
+                "permissions"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "bot_token",
+      "value": "your-internal-bot-api-key",
+      "type": "string"
+    }
+  ]
+}
