@@ -14,7 +14,7 @@ export function ServiceCard({ id, title, description, status, icon, lastUpdated,
   return (
     <div className="service-card group relative bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
       <div className="flex justify-between items-start mb-4">
-        <div className="p-2 bg-blue-50 rounded-lg">
+        <div className="p-2 rounded-lg">
           <span className="material-symbols-outlined text-primary">{icon}</span>
         </div>
         <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
@@ -38,6 +38,13 @@ export function ServiceCard({ id, title, description, status, icon, lastUpdated,
         >
           <span className="material-symbols-outlined text-sm mr-2">edit</span>
           Edit Content
+        </button>
+        <button 
+          className="p-2.5 border border-slate-200 text-slate-500 rounded-lg hover:bg-slate-50 hover:text-red-600 transition-colors" 
+          title="Link"
+          onClick={() => onArchive(id)}
+        >
+          <span className="material-symbols-outlined">Link</span>
         </button>
         <button 
           className="p-2.5 border border-slate-200 text-slate-500 rounded-lg hover:bg-slate-50 hover:text-red-600 transition-colors" 

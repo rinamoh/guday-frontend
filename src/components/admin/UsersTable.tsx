@@ -18,6 +18,8 @@ interface UsersTableProps {
   onPageChange: (page: number) => void;
   onGenerateOtp?: (id: string) => void;
   onDeactivateUser?: (id: string) => void;
+  showDeactivateAction?: boolean;
+  deactivateActionTitle?: string;
 }
 
 export function UsersTable({
@@ -28,6 +30,8 @@ export function UsersTable({
   onPageChange,
   onGenerateOtp,
   onDeactivateUser,
+  showDeactivateAction = true,
+  deactivateActionTitle = 'Deactivate',
 }: UsersTableProps) {
   const startResult = totalResults === 0 ? 0 : (currentPage - 1) * 10 + 1;
   const endResult = Math.min(currentPage * 10, totalResults);
@@ -52,6 +56,8 @@ export function UsersTable({
                 user={user}
                 onGenerateOtp={onGenerateOtp}
                 onDeactivateUser={onDeactivateUser}
+                showDeactivateAction={showDeactivateAction}
+                deactivateActionTitle={deactivateActionTitle}
               />
             ))}
           </tbody>

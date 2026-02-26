@@ -350,8 +350,28 @@ export function ServiceDetailPage() {
 
           {/* SIDEBAR */}
           <aside className="lg:w-80 space-y-6">
+              {/* Need Help (static design card) */}
+            <div className="bg-primary p-6 rounded-xl text-white shadow-lg relative overflow-hidden">
+              <div className="absolute -right-4 -bottom-4 opacity-10">
+                <span className="material-icons" style={{ fontSize: 120 }}>
+                  support_agent
+                </span>
+              </div>
+              <h4 className="text-xl font-bold mb-2">Need Help?</h4>
+              <p className="text-blue-100 text-sm mb-6 leading-relaxed">
+                Our support team can assist you with understanding this service.
+              </p>
+              <button className="w-full bg-white text-primary py-3 rounded-lg font-bold hover:bg-blue-50 transition-colors flex items-center justify-center">
+                <span className="material-icons mr-2 text-xl">
+                  contact_support
+                </span>
+                Contact Support
+              </button>
+            </div>
+
+
             {/* Service Information Card */}
-            <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+            {/* <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
               <h4 className="text-lg font-bold mb-4">Service Information</h4>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
@@ -381,10 +401,10 @@ export function ServiceDetailPage() {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Locations */}
-            {service?.locations?.length > 0 && (
+            {/* {service?.locations?.length > 0 && (
               <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
                 <h4 className="text-lg font-bold mb-4">Where to Apply</h4>
                 <div className="space-y-3">
@@ -398,7 +418,7 @@ export function ServiceDetailPage() {
                   ))}
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Related Services (only if it exists) */}
             {relatedServices.length > 0 && (
@@ -422,24 +442,7 @@ export function ServiceDetailPage() {
               </div>
             )}
 
-            {/* Need Help (static design card) */}
-            <div className="bg-primary p-6 rounded-xl text-white shadow-lg relative overflow-hidden">
-              <div className="absolute -right-4 -bottom-4 opacity-10">
-                <span className="material-icons" style={{ fontSize: 120 }}>
-                  support_agent
-                </span>
-              </div>
-              <h4 className="text-xl font-bold mb-2">Need Help?</h4>
-              <p className="text-blue-100 text-sm mb-6 leading-relaxed">
-                Our support team can assist you with understanding this service.
-              </p>
-              <button className="w-full bg-white text-primary py-3 rounded-lg font-bold hover:bg-blue-50 transition-colors flex items-center justify-center">
-                <span className="material-icons mr-2 text-xl">
-                  contact_support
-                </span>
-                Contact Support
-              </button>
-            </div>
+          
 
             {/* Quick Resources (derived from documents you already display) */}
             {documents.length > 0 && (

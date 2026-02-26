@@ -1,15 +1,18 @@
-import { apiGet, apiPost, apiPut, apiDelete, API_BASE_URL} from './client';
+import { API_BASE_URL } from './client';
+import { getAdminAuthHeader } from '../utils/adminSession';
 
 export interface AdminCategory {
   id: string;
   name: string;
   slug: string;
-  description?: string;
-  parent_id?: string;
-  icon_url?: string;
+  description?: string | null;
+  parent_id?: string | null;
+  icon_url?: string | null;
   display_order: number;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
+  service_count?: number;
+  children?: AdminCategory[];
 }
 
 export interface AdminCategoryListResponse {
@@ -22,83 +25,129 @@ export interface AdminCategoryListResponse {
 export interface AdminCategoryCreateRequest {
   name: string;
   slug: string;
-  description?: string;
-  parent_id?: string;
-  icon_url?: string;
+  description?: string | null;
+  parent_id?: string | null;
+  icon_url?: string | null;
   display_order: number;
 }
 
-export async function getAdminCategories(token: string): Promise<AdminCategoryListResponse> {
-  const response = await fetch(`${API_BASE_URL}/admin/categories`, {
+function getAuthHeaderOrThrow(): string {
+  const authHeader = getAdminAuthHeader();
+  if (!authHeader) {
+    throw new Error('Admin session token missing. Please log in as admin.');
+  }
+  return authHeader;
+}
+
+function parseErr(payload: unknown, fallback: string): string {
+  if (!payload || typeof payload !== 'object') return fallback;
+  const p = payload as Record<string, unknown>;
+
+  if (typeof p.detail === 'string') return p.detail;
+  if (Array.isArray(p.detail) && p.detail.length > 0) {
+    const first = p.detail[0] as Record<string, unknown>;
+    if (typeof first?.msg === 'string') return first.msg;
+  }
+  if (typeof p.error === 'string') return p.error;
+  if (typeof p.message === 'string') return p.message;
+  return fallback;
+}
+
+async function sessionFetch(endpoint: string, init?: RequestInit): Promise<unknown> {
+  const authHeader = getAuthHeaderOrThrow();
+
+  const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...init,
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: authHeader,
+      ...(init?.headers || {}),
     },
   });
 
-  if (!response.ok) {
-    throw new Error(`Failed to get categories: ${response.status} ${response.statusText}`);
+  const raw = await res.text();
+  let payload: unknown = null;
+  try {
+    payload = raw ? JSON.parse(raw) : null;
+  } catch {
+    payload = null;
   }
 
-  return response.json();
-}
-
-export async function getAdminCategory(token: string, id: string): Promise<AdminCategory> {
-  const response = await fetch(`${API_BASE_URL}/admin/categories/${id}`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to get category: ${response.status} ${response.statusText}`);
+  if (!res.ok) {
+    throw new Error(parseErr(payload, `Request failed: ${res.status} ${res.statusText}`));
   }
 
-  return response.json();
+  return payload;
 }
 
-export async function createAdminCategory(token: string, data: AdminCategoryCreateRequest): Promise<AdminCategory> {
-  const response = await fetch(`${API_BASE_URL}/admin/categories`, {
+function extractCategories(payload: unknown): AdminCategory[] {
+  if (Array.isArray(payload)) return payload as AdminCategory[];
+
+  if (!payload || typeof payload !== 'object') return [];
+  const p = payload as Record<string, unknown>;
+  const data = p.data;
+
+  if (Array.isArray(data)) return data as AdminCategory[];
+
+  if (data && typeof data === 'object') {
+    const d = data as Record<string, unknown>;
+    if (Array.isArray(d.categories)) return d.categories as AdminCategory[];
+    if (Array.isArray(d.items)) return d.items as AdminCategory[];
+    if (Array.isArray(d.results)) return d.results as AdminCategory[];
+  }
+
+  if (Array.isArray(p.categories)) return p.categories as AdminCategory[];
+  if (Array.isArray(p.items)) return p.items as AdminCategory[];
+  if (Array.isArray(p.results)) return p.results as AdminCategory[];
+
+  return [];
+}
+
+function unwrapCategory(payload: unknown): AdminCategory {
+  if (payload && typeof payload === 'object' && 'data' in payload) {
+    return (payload as { data: AdminCategory }).data;
+  }
+  return payload as AdminCategory;
+}
+
+export async function getAdminCategories(): Promise<AdminCategoryListResponse> {
+  const payload = await sessionFetch('/admin/categories');
+  const categories = extractCategories(payload);
+
+  const p = (payload ?? {}) as Record<string, any>;
+  return {
+    data: categories,
+    total: p?.meta?.total_count ?? p?.total ?? categories.length,
+    page: p?.meta?.pagination?.page ?? p?.page ?? 1,
+    page_size: p?.meta?.pagination?.limit ?? p?.page_size ?? categories.length,
+  };
+}
+
+export async function getAdminCategory(id: string): Promise<AdminCategory> {
+  const payload = await sessionFetch(`/admin/categories/${id}`);
+  return unwrapCategory(payload);
+}
+
+export async function createAdminCategory(data: AdminCategoryCreateRequest): Promise<AdminCategory> {
+  const payload = await sessionFetch('/admin/categories', {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
-
-  if (!response.ok) {
-    throw new Error(`Failed to create category: ${response.status} ${response.statusText}`);
-  }
-
-  return response.json();
+  return unwrapCategory(payload);
 }
 
-export async function updateAdminCategory(token: string, id: string, data: Partial<AdminCategoryCreateRequest>): Promise<AdminCategory> {
-  const response = await fetch(`${API_BASE_URL}/admin/categories/${id}`, {
+export async function updateAdminCategory(
+  id: string,
+  data: Partial<AdminCategoryCreateRequest>
+): Promise<AdminCategory> {
+  const payload = await sessionFetch(`/admin/categories/${id}`, {
     method: 'PUT',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
-
-  if (!response.ok) {
-    throw new Error(`Failed to update category: ${response.status} ${response.statusText}`);
-  }
-
-  return response.json();
+  return unwrapCategory(payload);
 }
 
-export async function deleteAdminCategory(token: string, id: string): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}/admin/categories/${id}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to delete category: ${response.status} ${response.statusText}`);
-  }
+export async function deleteAdminCategory(id: string): Promise<void> {
+  await sessionFetch(`/admin/categories/${id}`, { method: 'DELETE' });
 }

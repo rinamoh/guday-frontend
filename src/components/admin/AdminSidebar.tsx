@@ -3,24 +3,29 @@ import { Link, useLocation } from 'react-router-dom';
 const navigation = [
   { name: 'Dashboard', href: '/admin/dashboard', icon: 'dashboard' },
   { name: 'Content Management', href: '/admin/services', icon: 'article' },
+  { name: 'Categories', href: '/admin/categories', icon: 'category' },
   { name: 'Agents', href: '/admin/users', icon: 'group' },
+  { name: 'User Management', href: '/admin/user-management', icon: 'manage_accounts' },
+   { name: 'Tickets', href: '/admin/tickets', icon: 'support_agent' },
   { name: 'Settings', href: '/admin/settings', icon: 'settings' },
+
 ];
 
 export function AdminSidebar() {
   const location = useLocation();
 
   return (
-        <aside className="fixed left-0 top-0 w-64 h-screen bg-primary text-white flex flex-col z-40">
-
+    <aside className="fixed left-0 top-0 w-64 h-screen bg-primary text-white flex flex-col z-40">
       <div className="p-6">
         <span className="text-2xl font-bold tracking-tight">Guday Admin</span>
       </div>
-      
+
       <nav className="flex-1 mt-4">
         {navigation.map((item) => {
-          const isActive = location.pathname === item.href || 
-                          (item.href !== '/admin/dashboard' && location.pathname.startsWith(item.href));
+          const isActive =
+            location.pathname === item.href ||
+            (item.href !== '/admin/dashboard' && location.pathname.startsWith(item.href));
+
           return (
             <Link
               key={item.name}
@@ -35,7 +40,7 @@ export function AdminSidebar() {
           );
         })}
       </nav>
-      
+
       <div className="p-6 border-t border-white/10">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center text-xs font-bold">

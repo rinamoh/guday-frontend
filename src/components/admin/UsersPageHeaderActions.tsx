@@ -1,9 +1,14 @@
 interface UsersPageHeaderActionsProps {
   onAddUser: () => void;
   isAdding?: boolean;
+  buttonLabel?: string;
 }
 
-export function UsersPageHeaderActions({ onAddUser, isAdding = false }: UsersPageHeaderActionsProps) {
+export function UsersPageHeaderActions({
+  onAddUser,
+  isAdding = false,
+  buttonLabel = 'Add New Agent',
+}: UsersPageHeaderActionsProps) {
   return (
     <div className="flex items-center space-x-4">
       <div className="relative">
@@ -18,7 +23,7 @@ export function UsersPageHeaderActions({ onAddUser, isAdding = false }: UsersPag
         className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <span className="material-symbols-outlined text-sm mr-2">add</span>
-        {isAdding ? 'Creating...' : 'Add New Agent'}
+        {isAdding ? 'Creating...' : buttonLabel}
       </button>
     </div>
   );

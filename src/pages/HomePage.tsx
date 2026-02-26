@@ -20,7 +20,7 @@ export function HomePage() {
     target_audience: 'individuals',
     category_id: selectedCategoryId || undefined,
     search: searchQuery || undefined,
-    // Remove page and page_size to get ALL services
+    // Remove page and page_size to get ALL services but it still does not work
   });
   const { data: categoriesResponse, isLoading: categoriesLoading, error: categoriesError } = useCategories();
    console.log('servicesResponse:', servicesResponse);
@@ -82,7 +82,7 @@ export function HomePage() {
         </section>
 
         {/* How do I – most asked services */}
-        <section className="bg-primary dark:bg-slate-900 pt-8 pb-5">
+        <section className="bg-primary dark:bg-slate-900 pt-4 pb-5">
           <div className="max-w-5xl mx-auto px-4">
             <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md p-8 md:p-10">
               <h2 className="text-primary text-3xl font-bold mb-8">

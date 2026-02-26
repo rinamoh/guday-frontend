@@ -12,6 +12,8 @@ interface UserRowProps {
   user: User;
   onGenerateOtp?: (id: string) => void;
   onDeactivateUser?: (id: string) => void;
+  showDeactivateAction?: boolean;
+  deactivateActionTitle?: string;
 }
 
 const getRoleColor = (role: string) => {
@@ -27,7 +29,13 @@ const getRoleColor = (role: string) => {
   }
 };
 
-export function UserRow({ user, onGenerateOtp, onDeactivateUser }: UserRowProps) {
+export function UserRow({
+  user,
+  onGenerateOtp,
+  onDeactivateUser,
+  showDeactivateAction = true,
+  deactivateActionTitle = 'Deactivate',
+}: UserRowProps) {
   return (
     <tr className="hover:bg-slate-50/50 transition-colors">
       <td className="px-6 py-4">
@@ -71,14 +79,17 @@ export function UserRow({ user, onGenerateOtp, onDeactivateUser }: UserRowProps)
           >
             <span className="material-symbols-outlined text-[20px]">vpn_key</span>
           </button>
-          <button
-            type="button"
-            title="Deactivate Agent"
-            onClick={() => onDeactivateUser?.(user.id)}
-            className="p-1.5 hover:bg-red-50 rounded-lg text-slate-400 hover:text-red-600 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[20px]">person_off</span>
-          </button>
+
+          {showDeactivateAction && (
+            <button
+              type="button"
+              title={deactivateActionTitle}
+              onClick={() => onDeactivateUser?.(user.id)}
+              className="p-1.5 hover:bg-red-50 rounded-lg text-slate-400 hover:text-red-600 transition-colors"
+            >
+              <span className="material-symbols-outlined text-[20px]">person_off</span>
+            </button>
+          )}
         </div>
       </td>
     </tr>
