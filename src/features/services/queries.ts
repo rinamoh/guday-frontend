@@ -1,54 +1,56 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import {
   fetchServices,
   fetchServiceBySlug,
   fetchServiceSteps,
   fetchServiceDocuments,
   fetchServiceFaqs,
-} from '../../api/services';
+} from "../../api/services";
+import type { PublicLanguage } from "../../utils/publicLanguage";
 
 export function useServices(params?: {
   page?: number;
-  page_size?: number; // Changed from limit
-  category_id?: string; // Changed from category
+  page_size?: number;
+  category_id?: string;
   target_audience?: string;
   is_online_available?: boolean;
   search?: string;
+  language?: PublicLanguage;
 }) {
   return useQuery({
-    queryKey: ['services', params],
+    queryKey: ["services", params],
     queryFn: () => fetchServices(params),
   });
 }
 
-export function useService(slug: string) {
+export function useService(slug: string, params?: { language?: PublicLanguage }) {
   return useQuery({
-    queryKey: ['service', slug],
-    queryFn: () => fetchServiceBySlug(slug),
+    queryKey: ["service", slug, params],
+    queryFn: () => fetchServiceBySlug(slug, params),
     enabled: !!slug,
   });
 }
 
-export function useServiceSteps(slug: string) {
+export function useServiceSteps(slug: string, params?: { language?: PublicLanguage }) {
   return useQuery({
-    queryKey: ['serviceSteps', slug],
-    queryFn: () => fetchServiceSteps(slug),
+    queryKey: ["serviceSteps", slug, params],
+    queryFn: () => fetchServiceSteps(slug, params),
     enabled: !!slug,
   });
 }
 
-export function useServiceDocuments(slug: string) {
+export function useServiceDocuments(slug: string, params?: { language?: PublicLanguage }) {
   return useQuery({
-    queryKey: ['serviceDocuments', slug],
-    queryFn: () => fetchServiceDocuments(slug),
+    queryKey: ["serviceDocuments", slug, params],
+    queryFn: () => fetchServiceDocuments(slug, params),
     enabled: !!slug,
   });
 }
 
-export function useServiceFaqs(slug: string) {
+export function useServiceFaqs(slug: string, params?: { language?: PublicLanguage }) {
   return useQuery({
-    queryKey: ['serviceFaqs', slug],
-    queryFn: () => fetchServiceFaqs(slug),
+    queryKey: ["serviceFaqs", slug, params],
+    queryFn: () => fetchServiceFaqs(slug, params),
     enabled: !!slug,
   });
 }

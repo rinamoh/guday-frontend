@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { normalizePublicLanguage } from "../utils/publicLanguage";
+import { publicCopy } from "../i18n/public";
 
 type NewsItem = {
   id: string;
@@ -9,7 +11,7 @@ type NewsItem = {
   imageAlt: string;
 };
 
-const NEWS_ITEMS: NewsItem[] = [
+const NEWS_ITEMS_EN: NewsItem[] = [
   {
     id: "news-1",
     title: "New Winter Relief Fund Launched for Local Communities",
@@ -42,36 +44,57 @@ const NEWS_ITEMS: NewsItem[] = [
   },
 ];
 
+const NEWS_ITEMS_AM: NewsItem[] = [
+  {
+    id: "news-1",
+    title: "ለአካባቢ ማህበረሰቦች አዲስ የክረምት እገዛ ፈንድ ተጀመረ",
+    dateLabel: "ፌብሩወሪ 24, 2026",
+    description:
+      "በሰሜናዊ ክልሎች በተመዘገቡ ከባድ የክረምት አየር ሁኔታዎች ምክንያት ተጎዳውን ቤተሰብ ለመደገፍ መንግስት ሰፊ የገንዘብ እገዛ ፕሮግራም አስታወቀ።",
+    imageUrl: NEWS_ITEMS_EN[0].imageUrl,
+    imageAlt: "News 1",
+  },
+  {
+    id: "news-2",
+    title: "የዲጂታል ለውጥ ፕሮግራም አስፈላጊ ደረጃ ደረሰ",
+    dateLabel: "ፌብሩወሪ 22, 2026",
+    description:
+      "ከ80% በላይ የመንግስት አገልግሎቶች በአንድ የዲጂታል ፖርታል ላይ ተደርሰው አሁን ይገኛሉ፣ ይህም የሂደት ጊዜን በጣም ቀንሷል።",
+    imageUrl: NEWS_ITEMS_EN[1].imageUrl,
+    imageAlt: "News 2",
+  },
+  {
+    id: "news-3",
+    title: "የአረንጓዴ ኃይል ድጋፍ ፕሮግራም ለመመዝገብ ተከፈተ",
+    dateLabel: "ፌብሩወሪ 20, 2026",
+    description:
+      "አነስተኛ ንግዶች እና ቤተሰቦች የፀሐይ ፓነል ለመጫን እና የኃይል ብቃት ለማሻሻል የገንዘብ ድጋፍ ለመጠየቅ አሁን መመዝገብ ይችላሉ።",
+    imageUrl: NEWS_ITEMS_EN[2].imageUrl,
+    imageAlt: "News 3",
+  },
+];
+
 export default function LatestNewsSection() {
+  const [searchParams] = useSearchParams();
+  const language = normalizePublicLanguage(searchParams.get("language"));
+  const t = publicCopy[language];
+
+  const items = language === "am" ? NEWS_ITEMS_AM : NEWS_ITEMS_EN;
+
   return (
     <section className="py-16 bg-slate-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-primary text-2xl font-bold">Latest News</h2>
-
-          {/* Internal route (recommended). Change to your real route later. */}
-          {/* <Link
-            to="/updates"
-            className="text-primary font-semibold hover:underline flex items-center gap-1"
-          >
-            View all updates{" "}
-            <span className="material-symbols-outlined text-sm">
-              arrow_forward
-            </span>
-          </Link> */}
+          <h2 className="text-primary text-2xl font-bold">{t.latest_news_title}</h2>
         </div>
 
         <div className="flex overflow-x-auto gap-6 pb-6 no-scrollbar snap-x">
-          {NEWS_ITEMS.map((item) => (
+          {items.map((item) => (
             <article
               key={item.id}
               className="min-w-[300px] md:min-w-[400px] snap-start bg-white dark:bg-slate-800 rounded-lg shadow overflow-hidden"
             >
-              <img
-                alt={item.imageAlt}
-                className="w-full h-48 object-cover"
-                src={item.imageUrl}
-              />
+              <img alt={item.imageAlt} className="w-full h-48 object-cover" src={item.imageUrl} />
               <div className="p-6">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
                   {item.dateLabel}

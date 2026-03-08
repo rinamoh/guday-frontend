@@ -1,5 +1,7 @@
+// src/api/adminCategories.ts
 import { API_BASE_URL } from './client';
 import { getAdminAuthHeader } from '../utils/adminSession';
+import { getStoredAdminLanguage, type AdminLanguage } from '../utils/adminLanguage';
 
 export interface AdminCategory {
   id: string;
@@ -109,11 +111,27 @@ function unwrapCategory(payload: unknown): AdminCategory {
   return payload as AdminCategory;
 }
 
-export async function getAdminCategories(): Promise<AdminCategoryListResponse> {
-  const payload = await sessionFetch('/admin/categories');
-  const categories = extractCategories(payload);
+function buildLanguageQuery(language: AdminLanguage): string {
+  const params = new URLSearchParams();
+  params.set('language', language);
+  return params.toString() ? `?${params.toString()}` : '';
+}
 
+/**
+ * List admin categories for the current admin language.
+ * GET /admin/categories?language=en|am
+ */
+export async function getAdminCategories(params?: { language?: AdminLanguage }): Promise<AdminCategoryListResponse> {
+  const lang = params?.language ?? getStoredAdminLanguage();
+  const query = buildLanguageQuery(lang);
+
+  const payload = await sessionFetch(`/admin/categories${query}`, {
+    headers: { lang },
+  });
+
+  const categories = extractCategories(payload);
   const p = (payload ?? {}) as Record<string, any>;
+
   return {
     data: categories,
     total: p?.meta?.total_count ?? p?.total ?? categories.length,
@@ -122,27 +140,49 @@ export async function getAdminCategories(): Promise<AdminCategoryListResponse> {
   };
 }
 
-export async function getAdminCategory(id: string): Promise<AdminCategory> {
-  const payload = await sessionFetch(`/admin/categories/${id}`);
+/**
+ * Get a single category (language-specific behavior depends on backend).
+ */
+export async function getAdminCategory(id: string, params?: { language?: AdminLanguage }): Promise<AdminCategory> {
+  const lang = params?.language ?? getStoredAdminLanguage();
+  const payload = await sessionFetch(`/admin/categories/${id}`, {
+    headers: { lang },
+  });
   return unwrapCategory(payload);
 }
 
-export async function createAdminCategory(data: AdminCategoryCreateRequest): Promise<AdminCategory> {
+/**
+ * Create a category in the current admin language.
+ */
+export async function createAdminCategory(
+  data: AdminCategoryCreateRequest
+): Promise<AdminCategory> {
+  const lang = getStoredAdminLanguage();
   const payload = await sessionFetch('/admin/categories', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      lang,
+    },
     body: JSON.stringify(data),
   });
   return unwrapCategory(payload);
 }
 
+/**
+ * Update a category (language-specific behavior depends on backend).
+ */
 export async function updateAdminCategory(
   id: string,
   data: Partial<AdminCategoryCreateRequest>
 ): Promise<AdminCategory> {
+  const lang = getStoredAdminLanguage();
   const payload = await sessionFetch(`/admin/categories/${id}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      lang,
+    },
     body: JSON.stringify(data),
   });
   return unwrapCategory(payload);
@@ -150,4 +190,21 @@ export async function updateAdminCategory(
 
 export async function deleteAdminCategory(id: string): Promise<void> {
   await sessionFetch(`/admin/categories/${id}`, { method: 'DELETE' });
+}
+
+/**
+ * Link an English category to an Amharic category.
+ * POST /admin/categories/{en_category_id}/link-translation
+ * body: { "target_id": "<am_category_id>" }
+ */
+export async function linkAdminCategoryTranslation(enCategoryId: string, targetId: string): Promise<unknown> {
+  const lang = getStoredAdminLanguage(); // keep request consistent with current admin language session
+  return sessionFetch(`/admin/categories/${enCategoryId}/link-translation`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      lang,
+    },
+    body: JSON.stringify({ target_id: targetId }),
+  });
 }

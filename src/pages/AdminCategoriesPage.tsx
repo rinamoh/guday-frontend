@@ -10,6 +10,8 @@ import {
   useUpdateAdminCategory,
   useDeleteAdminCategory,
 } from '../features/admin/categories/mutations';
+import { useAdminLanguage } from '../hooks/useAdminLanguage';
+import { AdminLanguageSelect } from '../components/admin/AdminLanguageSelect';
 
 type FlatCategory = AdminCategory & {
   depth: number;
@@ -49,7 +51,9 @@ function flattenCategoryTree(
 }
 
 export function AdminCategoriesPage() {
-  const categoriesQuery = useAdminCategories();
+  const { language, setLanguage } = useAdminLanguage();
+
+  const categoriesQuery = useAdminCategories({ language });
   const createMutation = useCreateAdminCategory();
   const updateMutation = useUpdateAdminCategory();
   const deleteMutation = useDeleteAdminCategory();
@@ -60,7 +64,7 @@ export function AdminCategoriesPage() {
   const [form, setForm] = useState<AdminCategoryCreateRequest>(EMPTY_FORM);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const detailQuery = useAdminCategory(editingId ?? '');
+  const detailQuery = useAdminCategory(editingId ?? '', { language });
 
   useEffect(() => {
     if (!editingId || !detailQuery.data) return;
@@ -180,14 +184,17 @@ export function AdminCategoriesPage() {
       title="Category Management"
       breadcrumbs={breadcrumbs}
       actions={
-        <button
-          type="button"
-          onClick={openCreate}
-          className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center hover:bg-blue-700 transition-colors shadow-sm"
-        >
-          <span className="material-symbols-outlined text-sm mr-2">add</span>
-          Add Category
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={openCreate}
+            className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center hover:bg-blue-700 transition-colors shadow-sm"
+          >
+            <span className="material-symbols-outlined text-sm mr-2">add</span>
+            Add Category
+          </button>
+          <AdminLanguageSelect language={language} onChange={setLanguage} />
+        </div>
       }
     >
       <main className="flex-1 overflow-y-auto p-8 bg-[#F8FAFC]">
@@ -224,7 +231,7 @@ export function AdminCategoriesPage() {
                       <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Category</th>
                       <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">SubCategory</th>
                       <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Parent</th>
-                      
+
                       <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Services</th>
                       <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
                     </tr>
@@ -244,7 +251,7 @@ export function AdminCategoriesPage() {
                         </td>
                         <td className="px-6 py-4 text-sm text-slate-600">{c.slug}</td>
                         <td className="px-6 py-4 text-sm text-slate-600">{c.parent_name || '-'}</td>
-                       
+
                         <td className="px-6 py-4 text-sm text-slate-600">{c.service_count ?? 0}</td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
