@@ -1,10 +1,32 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useServices } from "../features/services/queries";
 import { useCategories } from "../features/categories/queries";
 import { ServiceCard } from "../components/ServiceCard";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
+import { normalizePublicLanguage } from "../utils/publicLanguage";
+import { publicCopy } from "../i18n/public";
+
+type CategoryNode = {
+  id: string;
+  name: string;
+  children?: CategoryNode[];
+};
+
+type FlatCategory = { id: string; name: string };
+
+function flattenCategories(nodes: CategoryNode[]): FlatCategory[] {
+  const out: FlatCategory[] = [];
+  const walk = (arr: CategoryNode[]) => {
+    for (const n of arr) {
+      out.push({ id: n.id, name: n.name });
+      if (Array.isArray(n.children) && n.children.length > 0) walk(n.children);
+    }
+  };
+  walk(nodes);
+  return out;
+}
 
 export function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,6 +34,8 @@ export function SearchPage() {
 
   const query = searchParams.get("q") || "";
   const categoryId = searchParams.get("category_id") || "";
+  const language = normalizePublicLanguage(searchParams.get("language"));
+  const t = publicCopy[language];
 
   const [searchInput, setSearchInput] = useState(query);
   const [selectedCategoryId, setSelectedCategoryId] = useState(categoryId);
@@ -21,35 +45,37 @@ export function SearchPage() {
     page_size: 50,
     search: query || undefined,
     category_id: categoryId || undefined,
+    language,
   });
 
-  const { data: categoriesResponse } = useCategories();
+  const { data: categoriesResponse } = useCategories({ language });
 
   const services = servicesResponse?.data || [];
-  const categories = categoriesResponse?.data || [];
+  const rawCategories = (categoriesResponse?.data || []) as CategoryNode[];
+  const categories = useMemo(() => flattenCategories(rawCategories), [rawCategories]);
   const total = servicesResponse?.meta?.total || services.length;
+
+  const selectedCategoryName = useMemo(() => {
+    if (!categoryId) return "";
+    return categories.find((c) => c.id === categoryId)?.name || "";
+  }, [categories, categoryId]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const params = new URLSearchParams();
-    if (searchInput.trim()) {
-      params.set("q", searchInput.trim());
-    }
-    if (selectedCategoryId) {
-      params.set("category_id", selectedCategoryId);
-    }
-    setSearchParams(params);
+    const p = new URLSearchParams();
+    p.set("language", language);
+    if (searchInput.trim()) p.set("q", searchInput.trim());
+    if (selectedCategoryId) p.set("category_id", selectedCategoryId);
+    setSearchParams(p);
   };
 
-  const handleCategoryChange = (categoryId: string) => {
-    setSelectedCategoryId(categoryId);
-    const params = new URLSearchParams(searchParams);
-    if (categoryId) {
-      params.set("category_id", categoryId);
-    } else {
-      params.delete("category_id");
-    }
-    setSearchParams(params);
+  const handleCategoryChange = (nextCategoryId: string) => {
+    setSelectedCategoryId(nextCategoryId);
+    const p = new URLSearchParams(searchParams);
+    p.set("language", language);
+    if (nextCategoryId) p.set("category_id", nextCategoryId);
+    else p.delete("category_id");
+    setSearchParams(p);
   };
 
   useEffect(() => {
@@ -63,21 +89,16 @@ export function SearchPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-8">
-          {/* Back button */}
           <button
             type="button"
-            onClick={() => navigate("/")}
+            onClick={() => navigate(`/?language=${language}`)}
             className="mb-4 inline-flex items-center text-sm font-medium text-slate-600 hover:text-primary"
           >
-            <span className="material-symbols-outlined text-base mr-1">
-              arrow_back
-            </span>
-            Back to home
+            <span className="material-symbols-outlined text-base mr-1">arrow_back</span>
+            {t.back_to_home}
           </button>
 
-          <h1 className="text-3xl font-bold text-slate-900 mb-6">
-            Search Services
-          </h1>
+          <h1 className="text-3xl font-bold text-slate-900 mb-6">{t.search_services_title}</h1>
 
           <form onSubmit={handleSearch} className="max-w-4xl space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
@@ -85,7 +106,7 @@ export function SearchPage() {
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Search for services..."
+                placeholder={t.services_search_placeholder}
                 className="flex-1 px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
               <select
@@ -93,7 +114,7 @@ export function SearchPage() {
                 onChange={(e) => handleCategoryChange(e.target.value)}
                 className="px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent min-w-[200px]"
               >
-                <option value="">All Categories</option>
+                <option value="">{t.all_categories_option}</option>
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
@@ -104,19 +125,20 @@ export function SearchPage() {
                 type="submit"
                 className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium whitespace-nowrap"
               >
-                Search
+                {t.search_button}
               </button>
             </div>
           </form>
         </div>
 
-        {query && (
+        {(query || categoryId) && (
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-slate-900">
-              Search results {query && `for "${query}"`}
+              {query ? `${t.search_services_title}: "${query}"` : t.filtered_services}
             </h2>
             <p className="text-slate-600 mt-1">
-              {total} result{total !== 1 ? "s" : ""} found
+              {selectedCategoryName ? `${t.category_label}: ${selectedCategoryName}. ` : ""}
+              {t.results_found(total)}
             </p>
           </div>
         )}
@@ -124,13 +146,11 @@ export function SearchPage() {
         {isLoading ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-slate-600">Searching...</p>
+            <p className="text-slate-600">{t.searching}</p>
           </div>
-        ) : services.length === 0 && query ? (
+        ) : services.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-slate-600">
-              No services found matching your search.
-            </p>
+            <p className="text-slate-600">{t.no_services_match}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

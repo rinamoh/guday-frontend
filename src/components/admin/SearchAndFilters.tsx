@@ -4,6 +4,7 @@ interface SearchAndFiltersProps {
   statusFilter: 'All' | 'Active' | 'Inactive';
   onStatusChange: (value: 'All' | 'Active' | 'Inactive') => void;
   onExport?: () => void;
+  searchPlaceholder?: string;
 }
 
 export function SearchAndFilters({
@@ -12,6 +13,7 @@ export function SearchAndFilters({
   statusFilter,
   onStatusChange,
   onExport,
+  searchPlaceholder = 'Search agents by name, email or ID...',
 }: SearchAndFiltersProps) {
   return (
     <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -21,7 +23,7 @@ export function SearchAndFilters({
         </span>
         <input
           className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:ring-primary focus:border-primary"
-          placeholder="Search agents by name, email or ID..."
+          placeholder={searchPlaceholder}
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}

@@ -11,9 +11,13 @@ import { AdminDashboard } from './pages/AdminDashboard';
 import { ServiceEditPage } from './pages/admin/ServiceEditPage';
 import { AdminServicesPage } from './pages/AdminServicesPage';
 import { AdminUsersPage } from './pages/AdminUsersPage';
+import { AdminUserManagementPage } from './pages/AdminUserManagmentPage';
+import { AddSystemUserPage } from './pages/AddSystemUserPage';
 import { AdminSettingsPage } from './pages/AdminSettingsPage';
+import { AdminTicketsPage } from './pages/AdminTicketsPage';
+import { AdminCategoriesPage } from './pages/AdminCategoriesPage';
 import { AddAgentPage } from './pages/AddAgentPage';
-import { hasAdminSession } from '../src/utils/adminSession';
+import { hasAdminSession } from './utils/adminSession';
 
 function RequireAdmin({ children }: { children: React.JSX.Element }) {
   if (!hasAdminSession()) {
@@ -22,22 +26,18 @@ function RequireAdmin({ children }: { children: React.JSX.Element }) {
   return children;
 }
 
-
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Public routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/services/:slug" element={<ServiceDetailPage />} />
         <Route path="/categories/:slug" element={<CategoryPage />} />
         <Route path="/search" element={<SearchPage />} />
 
-        {/* Admin login (unprotected) */}
         <Route path="/admin/login" element={<AdminLoginPage />} />
 
-        {/* Protected admin routes */}
         <Route
           path="/admin/dashboard"
           element={
@@ -86,6 +86,40 @@ function App() {
             </RequireAdmin>
           }
         />
+        <Route
+          path="/admin/user-management"
+          element={
+            <RequireAdmin>
+              <AdminUserManagementPage />
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin/user-management/new"
+          element={
+            <RequireAdmin>
+              <AddSystemUserPage />
+            </RequireAdmin>
+          }
+        />
+        <Route
+        path="/admin/tickets"
+        element={
+          <RequireAdmin>
+            <AdminTicketsPage />
+          </RequireAdmin>
+        }
+      />
+      <Route
+        path="/admin/categories"
+        element={
+          <RequireAdmin>
+            <AdminCategoriesPage />
+          </RequireAdmin>
+        }
+      />
+
+
         <Route
           path="/admin/settings"
           element={

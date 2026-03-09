@@ -5,6 +5,7 @@ export function DashboardHeaderActions() {
         <span className="material-symbols-outlined text-slate-400">notifications</span>
         <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
       </div>
+   
       <div className="h-8 w-[1px] bg-slate-200"></div>
       <div className="flex items-center text-sm text-slate-600 font-medium">
         Last updated: Just now

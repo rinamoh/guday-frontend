@@ -1,5 +1,6 @@
 import { API_BASE_URL } from './client';
 import { getAdminAuthHeader } from '../utils/adminSession';
+import { getStoredAdminLanguage, type AdminLanguage } from '../utils/adminLanguage';
 //const API_BASE_URL = "http://localhost:8000/api/v1";
 
 // Types (add to admin types file)
@@ -81,8 +82,6 @@ export interface BulkImportRequest {
   items: CreateServiceRequest[];
 }
 
-
-
 export async function createAdminService(token: string, serviceData: CreateServiceRequest): Promise<AdminService> {
   const response = await fetch(`${API_BASE_URL}/admin/services`, {
     method: 'POST',
@@ -100,9 +99,6 @@ export async function createAdminService(token: string, serviceData: CreateServi
   return response.json();
 }
 
-
-
-
 // ...types unchanged
 
 export async function getAdminServices(params?: {
@@ -111,11 +107,14 @@ export async function getAdminServices(params?: {
   status?: string;
   category_id?: string;
   search?: string;
+  language?: AdminLanguage;
 }): Promise<AdminServiceListResponse> {
   const authHeader = getAdminAuthHeader();
   if (!authHeader) {
     throw new Error('Admin session token missing. Please log in as admin.');
   }
+
+  const lang = params?.language ?? getStoredAdminLanguage();
 
   const searchParams = new URLSearchParams();
   if (params?.page) searchParams.append('page', params.page.toString());
@@ -124,10 +123,16 @@ export async function getAdminServices(params?: {
   if (params?.category_id) searchParams.append('category_id', params.category_id);
   if (params?.search) searchParams.append('search', params.search);
 
+  // Language drives the actual backend result set (not a client-side filter).
+  searchParams.set('language', lang);
+
   const url = `/admin/services${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
 
   const response = await fetch(`${API_BASE_URL}${url}`, {
-    headers: { Authorization: authHeader },
+    headers: {
+      Authorization: authHeader,
+      lang,
+    },
   });
 
   if (!response.ok) {
@@ -144,7 +149,6 @@ export async function getAdminServices(params?: {
     page_size: apiResponse?.meta?.pagination?.limit || list.length,
   };
 }
-
 
 export async function getAdminService(
   token: string | null,
@@ -214,11 +218,6 @@ export async function getAdminServiceSteps(
   return [];
 }
 
-
-
-
-
-
 export async function updateAdminService(token: string, serviceId: string, serviceData: Partial<CreateServiceRequest>): Promise<AdminService> {
   const response = await fetch(`${API_BASE_URL}/admin/services/${serviceId}`, {
     method: 'PUT',
@@ -278,7 +277,6 @@ export async function archiveAdminService(token: string, serviceId: string): Pro
 
   return response.json();
 }
-
 
 export async function createAdminServiceStep(token: string, serviceId: string, stepData: CreateStepRequest): Promise<AdminServiceStep> {
   const response = await fetch(`${API_BASE_URL}/admin/services/${serviceId}/steps`, {
