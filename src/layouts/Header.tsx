@@ -1,9 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 
-interface HeaderProps {
-  onToggleDarkMode?: () => void;
-}
-
 const NAV_LINKS = [
   { href: "#", label: "Business & Trade Services" },
   { href: "#", label: "Employment & labour" },
@@ -20,8 +16,7 @@ const LANGUAGES = [
   { code: "om", label: "Oromiffa" },
 ];
 
-const Header: React.FC<HeaderProps> = ({ onToggleDarkMode }) => {
-  const [isDark, setIsDark] = useState(false);
+const Header: React.FC = () => {
   const [languageOpen, setLanguageOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState("English");
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -40,13 +35,8 @@ useEffect(() => {
 }, [languageOpen]);
 
 
-  const handleToggleDarkMode = () => {
-    setIsDark(!isDark);
-    onToggleDarkMode?.();
-  };
-
   return (
-    <header className="bg-background-light dark:bg-background-dark shadow-sm border-b border-slate-200 dark:border-slate-700">
+    <header className="bg-background-light shadow-sm border-b border-slate-200">
       {/* Top bar: logo left, search + language right */}
       <div className="max-w-7xl mx-auto px-4 py-6 md:py-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <a
@@ -61,7 +51,7 @@ useEffect(() => {
             <input
               type="text"
               placeholder="Search..."
-              className="w-full border border-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-l transition-all"
+              className="w-full border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-l transition-all"
             />
             <button
               type="button"
@@ -87,7 +77,7 @@ useEffect(() => {
           {languageOpen && (
             <ul
               role="listbox"
-              className="absolute right-0 top-full mt-1 min-w-[140px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded shadow-lg py-1 z-50"
+              className="absolute right-0 top-full mt-1 min-w-[140px] bg-white border border-slate-200 rounded shadow-lg py-1 z-50"
             >
               {LANGUAGES.map((lang) => (
                 <li key={lang.code} role="option" aria-selected={selectedLang === lang.label}>
@@ -97,8 +87,8 @@ useEffect(() => {
                       setSelectedLang(lang.label);
                       setLanguageOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors ${
-                      selectedLang === lang.label ? "text-primary font-semibold" : "text-slate-800 dark:text-slate-200"
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-100 transition-colors ${
+                      selectedLang === lang.label ? "text-primary font-semibold" : "text-slate-800"
                     }`}
                   >
                     {lang.label}
@@ -112,7 +102,7 @@ useEffect(() => {
       </div>
 
       {/* Navigation */}
-      <nav className="border-t border-slate-100 dark:border-slate-800" aria-label="Main">
+      <nav className="border-t border-slate-100" aria-label="Main">
         <div className="max-w-7xl mx-auto px-4 items-center">
           <ul className="flex flex-wrap items-center justify-start md:gap-x-8 py-3 overflow-x-auto no-scrollbar gap-x-6 md:gap-x-8">
             {NAV_LINKS.map((link) => (

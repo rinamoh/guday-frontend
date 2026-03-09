@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 type NewsItem = {
   id: string;
   title: string;
@@ -44,7 +42,7 @@ const NEWS_ITEMS: NewsItem[] = [
 
 export default function LatestNewsSection() {
   return (
-    <section className="py-16 bg-slate-50 dark:bg-slate-900">
+    <section className="py-16 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-primary text-2xl font-bold">Latest News</h2>
@@ -65,7 +63,7 @@ export default function LatestNewsSection() {
           {NEWS_ITEMS.map((item) => (
             <article
               key={item.id}
-              className="min-w-[300px] md:min-w-[400px] snap-start bg-white dark:bg-slate-800 rounded-lg shadow overflow-hidden"
+              className="min-w-[300px] md:min-w-[400px] snap-start bg-white rounded-lg shadow overflow-hidden"
             >
               <img
                 alt={item.imageAlt}
@@ -79,7 +77,7 @@ export default function LatestNewsSection() {
                 <h3 className="text-xl text-primary font-bold mt-2 mb-3 leading-tight">
                   {item.title}
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400 text-sm line-clamp-3">
+                <p className="text-slate-600 text-sm line-clamp-3">
                   {item.description}
                 </p>
               </div>

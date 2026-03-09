@@ -6,7 +6,7 @@ export const API_BASE_URL = "https://guday.taliyap2p.com/api/v1"; // From the co
 
 // Mock responses — only used when USE_MOCK_API is true
 async function getMockResponse<T>(endpoint: string): Promise<T> {
-  const { mockServicesList, getMockServiceBySlug,mockCategoriesList } = await import("./mockData");
+  const { mockServicesList, getMockServiceBySlug, mockCategoriesList } = await import("./mockData");
 
   if (endpoint.startsWith("/services?") || endpoint === "/services") {
   return { data: mockServicesList } as T; 

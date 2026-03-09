@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiPut, apiDelete, API_BASE_URL} from './client';
+import { API_BASE_URL } from './client';
 
 export interface AdminCategory {
   id: string;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
@@ -14,7 +15,7 @@ import { AdminSettingsPage } from './pages/AdminSettingsPage';
 import { AddAgentPage } from './pages/AddAgentPage';
 import { hasAdminSession } from '../src/utils/adminSession';
 
-function RequireAdmin({ children }: { children: JSX.Element }) {
+function RequireAdmin({ children }: { children: React.JSX.Element }) {
   if (!hasAdminSession()) {
     return <Navigate to="/admin/login" replace />;
   }

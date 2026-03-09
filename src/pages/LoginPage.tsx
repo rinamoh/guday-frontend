@@ -76,7 +76,7 @@ export function LoginPage() {
   return (
     <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
-        <div className="bg-white dark:bg-slate-900 shadow-xl rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800">
+        <div className="bg-white shadow-xl rounded-xl overflow-hidden border border-slate-200">
           <div className="p-8 sm:p-10">
             <div className="text-center mb-10">
               <div className="inline-flex items-center justify-center mb-6">
@@ -85,11 +85,11 @@ export function LoginPage() {
                 </span>
               </div>
 
-              <h2 className="text-2xl font-bold text-primary dark:text-blue-400">
+              <h2 className="text-2xl font-bold text-primary">
                 Sign In to Your Account
               </h2>
 
-              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              <p className="mt-2 text-sm text-slate-500">
                 Access official government services information securely
               </p>
             </div>
@@ -105,7 +105,7 @@ export function LoginPage() {
               {/* Username */}
               <div>
                 <label
-                  className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2"
+                  className="block text-sm font-semibold text-slate-700 mb-2"
                   htmlFor="username"
                 >
                   Username
@@ -127,7 +127,7 @@ export function LoginPage() {
                     placeholder="your-username"
                     value={form.username}
                     onChange={(e) => onChangeUsername(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm transition-all"
+                    className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm transition-all"
                   />
                 </div>
               </div>
@@ -136,7 +136,7 @@ export function LoginPage() {
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label
-                    className="block text-sm font-semibold text-slate-700 dark:text-slate-300"
+                    className="block text-sm font-semibold text-slate-700"
                     htmlFor="password"
                   >
                     Password
@@ -144,7 +144,7 @@ export function LoginPage() {
 
                   <Link
                     to="/forgot-password"
-                    className="text-sm font-medium text-primary hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                    className="text-sm font-medium text-primary hover:text-blue-700"
                   >
                     Forgot Password?
                   </Link>
@@ -166,7 +166,7 @@ export function LoginPage() {
                     placeholder="••••••••"
                     value={form.password}
                     onChange={(e) => onChangePassword(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm transition-all"
+                    className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm transition-all"
                   />
                 </div>
               </div>
@@ -179,11 +179,11 @@ export function LoginPage() {
                   type="checkbox"
                   checked={form.remember}
                   onChange={(e) => onToggleRemember(e.target.checked)}
-                  className="h-4 w-4 text-primary focus:ring-primary border-slate-300 dark:border-slate-700 rounded"
+                  className="h-4 w-4 text-primary focus:ring-primary border-slate-300 rounded"
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-slate-600 dark:text-slate-400"
+                  className="ml-2 block text-sm text-slate-600"
                 >
                   Remember me for 30 days
                 </label>
@@ -201,12 +201,12 @@ export function LoginPage() {
               </div>
             </form>
 
-            <div className="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800 text-center">
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+            <div className="mt-8 pt-8 border-t border-slate-100 text-center">
+              <p className="text-sm text-slate-600">
                 Need admin access?{" "}
                 <Link
                   to="/admin/login"
-                  className="font-bold text-primary hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                  className="font-bold text-primary hover:text-blue-700"
                 >
                   Go to Admin Login
                 </Link>
@@ -214,7 +214,7 @@ export function LoginPage() {
             </div>
           </div>
 
-          <div className="bg-slate-50 dark:bg-slate-800/50 px-8 py-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center space-x-4" />
+          <div className="bg-slate-50 px-8 py-4 border-t border-slate-200 flex items-center justify-center space-x-4" />
         </div>
       </div>
     </main>

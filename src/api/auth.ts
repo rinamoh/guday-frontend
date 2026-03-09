@@ -1,5 +1,5 @@
 import { API_BASE_URL, USE_MOCK_API, setAuthToken } from "./client";
-import type { LoginRequest, LoginResponse, NormalizedLoginResponse } from "../types/auth";
+import type { LoginRequest, NormalizedLoginResponse } from "../types/auth";
 
 /**
  * Login

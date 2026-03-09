@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
-
 export default function Footer() {
   return (
-<footer className="bg-white pt-16 pb-4 mt-auto border-t border-slate-200 dark:border-slate-800">
+<footer className="bg-white pt-16 pb-4 mt-auto border-t border-slate-200">
 
       <div className="max-w-7xl mx-auto px-4">
         {/* Top grid */}

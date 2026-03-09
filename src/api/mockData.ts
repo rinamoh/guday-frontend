@@ -653,6 +653,14 @@ const mockDetailBySlug: Record<string, ServiceDetail> = {
   // For brevity, I'm showing the pattern. In practice, add all 15 services.
 };
 
+export const mockCategoriesList = [
+  { id: "cat-1", name: "Business & Licensing", slug: "business-licensing" },
+  { id: "cat-2", name: "Immigration & Citizenship", slug: "immigration-citizenship" },
+  { id: "cat-3", name: "Citizen Services", slug: "citizen-services" },
+  { id: "cat-4", name: "Finance & Taxes", slug: "finance-taxes" },
+  { id: "cat-5", name: "Health & Social Services", slug: "health-social" },
+];
+
 export function getMockServiceBySlug(slug: string): ServiceDetail | undefined {
   return mockDetailBySlug[slug];
 }

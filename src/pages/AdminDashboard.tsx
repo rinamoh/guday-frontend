@@ -1,9 +1,7 @@
 import { AdminLayout } from '../layouts/AdminLayout';
-import { StatsCard } from '../components/admin/StatsCard';
 import { ApplicationTrendsChart } from '../components/admin/ApplicationTrendsChart';
 import { RecentActivity } from '../components/admin/RecentActivity';
 import { QuickActions } from '../components/admin/QuickActions';
-import { TrendChart } from '../components/admin/TrendChart';
 import { DashboardHeaderActions } from '../components/admin/DashboardHeaderActions';
 
 export function AdminDashboard() {

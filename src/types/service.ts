@@ -17,18 +17,29 @@ export interface ServiceSummary {
   id: string;
   title: string;
   slug: string;
-  overview: string; // Using overview instead of shortDescription
-  category_name: string; // Flattened from backend
-  sub_category_name: string; // Flattened from backend
-  target_audience: string;
-  estimated_duration: string;
-  is_online_available: boolean;
-  requires_appointment: boolean; // Changed from requiresAppointment
-  step_count: number; // Changed from totalSteps
-  average_rating: number;
-  view_count: number;
-  status: string;
-  created_at: string; // Added
+  overview?: string;
+  shortDescription?: string;
+  category?: Category;
+  subCategory?: SubCategory;
+  category_name?: string;
+  sub_category_name?: string;
+  target_audience?: string;
+  targetAudience?: string;
+  estimated_duration?: string;
+  estimatedDuration?: string;
+  is_online_available?: boolean;
+  isOnlineAvailable?: boolean;
+  requires_appointment?: boolean;
+  requiresAppointment?: boolean;
+  step_count?: number;
+  totalSteps?: number;
+  average_rating?: number;
+  averageRating?: number;
+  view_count?: number;
+  viewCount?: number;
+  status?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface EligibilityRequirement {
@@ -106,14 +117,26 @@ export interface ServiceBase {
   subCategory: SubCategory;
   targetAudience: string;
   estimatedDuration: string;
+  estimated_duration?: string;
   isOnlineAvailable: boolean;
+  is_online_available?: boolean;
   requiresAppointment: boolean;
   totalSteps: number;
   averageRating: number;
   viewCount: number;
   eligibilityRequirements: EligibilityRequirement[];
+  eligibility_requirements?: any[];
+  required_documents?: any[];
+  steps?: Step[];
+  notes?: any[];
+  fees?: string;
+  processing_time?: string;
+  locations?: any[];
+  category_name?: string;
+  sub_category_name?: string;
   createdAt?: string;
   updatedAt?: string;
+  updated_at?: string;
 }
 
 export interface ServiceStepsResponse extends ApiResponse<Step[]> {}

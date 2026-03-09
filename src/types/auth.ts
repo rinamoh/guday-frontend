@@ -1,5 +1,3 @@
-import type { ApiResponse } from "./api";
-
 export interface LoginRequest {
   username: string; // ✅ Changed from email to username
   password: string;

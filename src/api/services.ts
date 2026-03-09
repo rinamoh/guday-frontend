@@ -1,5 +1,4 @@
 import { apiGet } from "./client";
-import type { ServiceSummary, ServiceDetail } from "../types/service";
 
 // export async function fetchServices(): Promise<ServiceSummary[]> {
 //   const res = await apiGet<{ data: { services: ServiceSummary[] } }>(

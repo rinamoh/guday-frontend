@@ -18,7 +18,7 @@ interface ServicesGridProps {
   onAddService: () => void;
 }
 
-export function ServicesGrid({ services, onEditService, onArchiveService, onAddService }: ServicesGridProps) {
+export function ServicesGrid({ services, onEditService, onArchiveService, onDeleteService, onAddService }: ServicesGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {services.map((service) => (
@@ -32,6 +32,7 @@ export function ServicesGrid({ services, onEditService, onArchiveService, onAddS
           lastUpdated={service.lastUpdated}
           onEdit={onEditService}
           onArchive={onArchiveService}
+          onDeleteService={onDeleteService}
         />
       ))}
       <AddServiceCard onClick={onAddService} />

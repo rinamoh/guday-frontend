@@ -103,7 +103,7 @@ export function ServiceDetailPage() {
         {/* Breadcrumbs */}
         <nav
           aria-label="Breadcrumb"
-          className="flex mb-8 text-sm font-medium text-slate-500 dark:text-slate-400"
+          className="flex mb-8 text-sm font-medium text-slate-500"
         >
           <ol className="inline-flex items-center space-x-1 md:space-x-3">
             <li className="inline-flex items-center">
@@ -117,7 +117,7 @@ export function ServiceDetailPage() {
                 <span className="material-icons text-sm mx-1">
                   chevron_right
                 </span>
-                <span className="text-slate-600 dark:text-slate-300">
+                <span className="text-slate-600">
                   {categoryName}
                 </span>
               </div>
@@ -128,7 +128,7 @@ export function ServiceDetailPage() {
                 <span className="material-icons text-sm mx-1">
                   chevron_right
                 </span>
-                <span className="text-slate-800 dark:text-slate-200">
+                <span className="text-slate-800">
                   {service.title}
                 </span>
               </div>
@@ -144,19 +144,19 @@ export function ServiceDetailPage() {
             </h1>
 
             {subCategoryName ? (
-              <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">
+              <p className="text-sm text-slate-500 mb-3">
                 {categoryName} • {subCategoryName}
               </p>
             ) : null}
 
             {service.overview ? (
-              <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
+              <p className="text-lg text-slate-600 mb-10 leading-relaxed">
                 {service.overview}
               </p>
             ) : null}
 
             {/* Eligibility Requirements */}
-            {service?.eligibility_requirements?.length > 0 && (
+            {(service?.eligibility_requirements?.length ?? 0) > 0 && (
               <section className="mb-12">
                 <h2 className="text-2xl font-bold mb-6 flex items-center">
                   <span className="material-icons mr-2 text-primary">
@@ -166,12 +166,12 @@ export function ServiceDetailPage() {
                 </h2>
 
                 <ul className="space-y-4">
-                  {service.eligibility_requirements.map((req: any) => (
+                  {service.eligibility_requirements!.map((req: any) => (
                     <li key={req.id} className="flex items-start">
                       <span className="material-icons text-primary mr-3 text-lg">
                         check_circle
                       </span>
-                      <span className="text-slate-700 dark:text-slate-300">
+                      <span className="text-slate-700">
                         {req.requirement_description}
                       </span>
                     </li>
@@ -181,7 +181,7 @@ export function ServiceDetailPage() {
             )}
 
             {/* Required Documents */}
-            {service?.required_documents?.length > 0 && (
+            {(service?.required_documents?.length ?? 0) > 0 && (
               <section className="mb-12">
                 <h2 className="text-2xl font-bold mb-6 flex items-center">
                   <span className="material-icons mr-2 text-primary">
@@ -190,19 +190,19 @@ export function ServiceDetailPage() {
                   Required Documents
                 </h2>
 
-                <div className="bg-white dark:bg-slate-800 rounded-xl p-6 ring-1 ring-slate-200 dark:ring-slate-700">
+                <div className="bg-white rounded-xl p-6 ring-1 ring-slate-200">
                   <ul className="space-y-4">
-                    {service.required_documents.map((doc: any) => (
+                    {service.required_documents!.map((doc: any) => (
                       <li key={doc.id} className="flex items-start gap-3">
                         <span className="material-icons text-primary text-lg">
                           description
                         </span>
                         <div>
-                          <div className="font-semibold text-slate-800 dark:text-slate-200">
+                          <div className="font-semibold text-slate-800">
                             {doc.document_name}
                           </div>
                           {doc.description ? (
-                            <p className="text-sm text-slate-600 dark:text-slate-400">
+                            <p className="text-sm text-slate-600">
                               {doc.description}
                             </p>
                           ) : null}
@@ -250,7 +250,7 @@ export function ServiceDetailPage() {
                             "absolute left-0 top-0 w-8 h-8 rounded-full flex items-center justify-center font-bold z-10",
                             isFirst
                               ? "bg-primary text-white shadow-lg"
-                              : "bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-300",
+                              : "bg-slate-200 text-slate-500",
                           ].join(" ")}
                         >
                           {step.step_number ?? idx + 1}
@@ -259,18 +259,18 @@ export function ServiceDetailPage() {
                         {/* Step card */}
                         <div
                           className={[
-                            "bg-white dark:bg-slate-800 p-6 rounded shadow-sm ring-1 ring-slate-200 dark:ring-slate-700",
+                            "bg-white p-6 rounded shadow-sm ring-1 ring-slate-200",
                             isFirst ? "border-l-4 border-primary" : "",
                           ].join(" ")}
                         >
                           {step.title && step.title !== null && (
-                            <h3 className="text-xl font-bold mb-3 text-slate-800 dark:text-slate-200">
+                            <h3 className="text-xl font-bold mb-3 text-slate-800">
                               {step.title}
                             </h3>
                           )}
 
                           {step.instruction ? (
-                            <p className="text-slate-600 dark:text-slate-400 mb-4">
+                            <p className="text-slate-600 mb-4">
                               {step.instruction}
                             </p>
                           ) : null}
@@ -278,11 +278,11 @@ export function ServiceDetailPage() {
                           {/* Legal References */}
                           {/* Legal References */}
                           {step.legal_references && step.legal_references.length > 0 && (
-                            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-md border border-blue-200 dark:border-blue-800">
-                              <h4 className="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-2">
+                            <div className="mt-4 p-3 bg-blue-50 rounded-md border border-blue-200">
+                              <h4 className="text-sm font-semibold text-blue-800 mb-2">
                                 Legal References:
                               </h4>
-                              <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                              <ul className="text-sm text-blue-700 space-y-1">
                                 {step.legal_references.map((ref: any, refIdx: number) => (
                                   <li key={refIdx}>• {typeof ref === 'object' ? ref.reference_text : ref}</li>
                                 ))}
@@ -300,7 +300,7 @@ export function ServiceDetailPage() {
             
 
             {/* Important Notes */}
-            {service?.notes?.length > 0 && (
+            {(service?.notes?.length ?? 0) > 0 && (
               <section className="mb-12">
                 <h2 className="text-2xl font-bold mb-6 flex items-center">
                   <span className="material-icons mr-2 text-primary">
@@ -310,9 +310,9 @@ export function ServiceDetailPage() {
                 </h2>
 
                 <div className="space-y-3">
-                  {service.notes.map((note: any) => (
-                    <div key={note.id} className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                      <p className="text-blue-800 dark:text-blue-200">{note.content}</p>
+                  {service.notes!.map((note: any) => (
+                    <div key={note.id} className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                      <p className="text-blue-800">{note.content}</p>
                     </div>
                   ))}
                 </div>
@@ -333,12 +333,12 @@ export function ServiceDetailPage() {
                   {faqs.map((faq: any) => (
                     <details
                       key={faq.id}
-                      className="bg-white dark:bg-slate-800 rounded-lg p-5 ring-1 ring-slate-200 dark:ring-slate-700"
+                      className="bg-white rounded-lg p-5 ring-1 ring-slate-200"
                     >
-                      <summary className="cursor-pointer font-semibold text-slate-800 dark:text-slate-200">
+                      <summary className="cursor-pointer font-semibold text-slate-800">
                         {faq.question}
                       </summary>
-                      <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
+                      <p className="mt-3 text-sm text-slate-600">
                         {faq.answer}
                       </p>
                     </details>
@@ -351,7 +351,7 @@ export function ServiceDetailPage() {
           {/* SIDEBAR */}
           <aside className="lg:w-80 space-y-6">
             {/* Service Information Card */}
-            <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-sm">
               <h4 className="text-lg font-bold mb-4">Service Information</h4>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
@@ -384,15 +384,15 @@ export function ServiceDetailPage() {
             </div>
 
             {/* Locations */}
-            {service?.locations?.length > 0 && (
-              <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+            {(service?.locations?.length ?? 0) > 0 && (
+              <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-sm">
                 <h4 className="text-lg font-bold mb-4">Where to Apply</h4>
                 <div className="space-y-3">
-                  {service.locations.map((location: any) => (
+                  {service.locations!.map((location: any) => (
                     <div key={location.id} className="text-sm">
-                      <p className="font-medium text-slate-900 dark:text-slate-100">{location.location_name}</p>
+                      <p className="font-medium text-slate-900">{location.location_name}</p>
                       {location.address && (
-                        <p className="text-slate-600 dark:text-slate-400 mt-1">{location.address}</p>
+                        <p className="text-slate-600 mt-1">{location.address}</p>
                       )}
                     </div>
                   ))}
@@ -402,7 +402,7 @@ export function ServiceDetailPage() {
 
             {/* Related Services (only if it exists) */}
             {relatedServices.length > 0 && (
-              <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-sm">
                 <h4 className="text-lg font-bold mb-4">Related Services</h4>
                 <ul className="space-y-4">
                   {relatedServices.map((rs: any) => (
@@ -412,7 +412,7 @@ export function ServiceDetailPage() {
                         className="flex items-center group"
                       >
                         <div className="w-2 h-2 rounded-full bg-primary mr-3" />
-                        <span className="text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors">
+                        <span className="text-slate-600 group-hover:text-primary transition-colors">
                           {rs.title ?? "Related service"}
                         </span>
                       </Link>
@@ -451,7 +451,7 @@ export function ServiceDetailPage() {
                   {documents.slice(0, 3).map((doc: any) => (
                     <div
                       key={doc.id}
-                      className="flex items-center text-slate-600 dark:text-slate-400"
+                      className="flex items-center text-slate-600"
                     >
                       <span className="material-icons text-lg mr-2">
                         description

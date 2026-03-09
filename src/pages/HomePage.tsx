@@ -29,7 +29,6 @@ export function HomePage() {
 
   const services = servicesResponse?.data || [];
   const categories = categoriesResponse?.data || [];
-  const totalServices = servicesResponse?.meta?.total_count || services.length;
   const mostAsked = services.slice(0, MOST_ASKED_COUNT);
 
   const isLoading = servicesLoading || categoriesLoading;
@@ -82,9 +81,9 @@ export function HomePage() {
         </section>
 
         {/* How do I – most asked services */}
-        <section className="bg-primary dark:bg-slate-900 pt-8 pb-5">
+        <section className="bg-primary pt-8 pb-5">
           <div className="max-w-5xl mx-auto px-4">
-            <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md p-8 md:p-10">
+            <div className="bg-white rounded-lg shadow-md p-8 md:p-10">
               <h2 className="text-primary text-3xl font-bold mb-8">
                 Most Searched Services
               </h2>
@@ -94,11 +93,11 @@ export function HomePage() {
                 </div>
               ) : error ? (
                 <div className="text-center py-8">
-                  <p className="text-slate-600 dark:text-slate-400">Unable to load popular services.</p>
+                  <p className="text-slate-600">Unable to load popular services.</p>
                 </div>
               ) : mostAsked.length === 0 ? (
                 <div className="text-center py-8">
-                  <p className="text-slate-600 dark:text-slate-400">No services available.</p>
+                  <p className="text-slate-600">No services available.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -107,7 +106,7 @@ export function HomePage() {
                       <div className="w-1.5 bg-primary self-stretch mr-4 shrink-0" aria-hidden />
                       <Link
                         to={`/services/${service.slug}`}
-                        className="text-slate-900 dark:text-slate-100 hover:text-primary dark:hover:text-secondary font-medium text-lg leading-tight transition-colors"
+                        className="text-slate-900 hover:text-primary font-medium text-lg leading-tight transition-colors"
                       >
                         {service.title}
                       </Link>

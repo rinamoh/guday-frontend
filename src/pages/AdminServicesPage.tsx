@@ -5,12 +5,12 @@ import { ServicesPageHeaderActions } from '../components/admin/ServicesPageHeade
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminServices } from '../features/admin/services/queries';
-import { usePublishAdminService, useArchiveAdminService, useDeleteAdminService } from '../features/admin/services/mutations';
+import { useArchiveAdminService, useDeleteAdminService } from '../features/admin/services/mutations';
 
 export function AdminServicesPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('All Categories');
+  const [, setCategoryFilter] = useState('All Categories');
   const [statusFilter, setStatusFilter] = useState('All Status');
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>('');
 
@@ -22,7 +22,6 @@ export function AdminServicesPage() {
     search: searchQuery || undefined,
   });
 
-  const publishMutation = usePublishAdminService();
   const archiveMutation = useArchiveAdminService();
   const deleteMutation = useDeleteAdminService();
 
